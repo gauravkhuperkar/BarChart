@@ -1,12 +1,23 @@
-var data = [2,5,8,2,10,7,1,9,3,4];
+var data = [20,52,83,23,10,78,14,97,33,40];
 
 var loadChart = function() {
-	d3.select(".chart")
+	var chart = d3.select(".chart")
 		.selectAll("div")
-		.data(data)
-		.enter().append("div")
-		.style("width", function(d) {return d*100})
+		.data(data,function(d){return d});
+
+	chart.enter().append("div")
+		.style("width", function(d) {return d*10})
 		.text(function(d) {return d})
+
+	chart.exit().remove();
 }
+
+var updateChart = function() {
+	data.shift();
+	data.push(Math.floor(Math.random()*100));
+	loadChart()
+}
+
+setInterval(updateChart,500);
 
 window.onload = loadChart;
