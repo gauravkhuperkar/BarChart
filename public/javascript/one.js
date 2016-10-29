@@ -3,15 +3,16 @@ var data = [20,52,83,23,10,78,14,97,33,40];
 var colors = {
 	"maths":"#3A5FCD",
 	"english":"#FF8C00",
-	"kannada":"#3CB371",
+	"kannada":"#2ca02c",
 	"science":"#DC143C",
-	"social studies":"#6A5ACD",
-	"bengali":"#6F4242",
+	"social studies":"#9467bd",
+	"bengali":"#8c564b",
 	"tamil":"#FF69B4",
-	"sports":"#808080"
+	"sports":"#7f7f7f"
 };
 
 var subjects = ["maths","english","kannada","science","social studies","bengali","tamil","sports"]
+var sort_options = ["Name", "Subject", "Score"]
 
 var students = [
 	{name:'ramesh',subject:'maths',score:87},
@@ -39,21 +40,26 @@ var loadChart = function() {
 		.style("background-color", function(d){return colors[d.subject]})
 
 	chart.exit().remove();
-	displaySubjects()
-	displaySortOptions()
+	displaySubjects();
+	displaySortOptions();
 };
 
 var displaySubjects = function() {
-	var container = d3.select(".subjects")
-	container.append("div").text("Subjects: ")
+	var container = d3.select(".subjects");
+	container.append("div").text("Subjects: ").style("color","black");
 	for (var i = 0; i < subjects.length; i++) {
-		container.append("div").text(subjects[i]).style("background-color",colors[subjects[i]])
+		container.append("div").text(subjects[i]).style("background-color",colors[subjects[i]]);
 	};
-}
+};
+
 
 var displaySortOptions = function() {
 	var container = d3.select(".sort_options")
+	container.append("div").text("Sort by:").style("color","black").style("background-color","white");
+	for (var i = 0; i < sort_options.length; i++) {
+		container.append("div").text(sort_options[i])
+	};
 	console.log(container)
-}
+};
 
 window.onload = loadChart;
