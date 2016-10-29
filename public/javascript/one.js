@@ -11,8 +11,26 @@ var colors = {
 	"sports":"#7f7f7f"
 };
 
-var subjects = ["maths","english","kannada","science","social studies","bengali","tamil","sports"]
-var sort_options = ["Name", "Subject", "Score"]
+var subjects = ["maths","english","kannada","science","social studies","bengali","tamil","sports"];
+var sort_options = ["Name", "Subject", "Score"];
+
+var sortOptions = {
+	"Name" : function(){
+		d3.selectAll(".chart div").sort(function(a,b){
+			return a.name.localeCompare(b.name);
+		})
+	},
+	"Subject": function(){
+		d3.selectAll(".chart div").sort(function(a,b){
+			return a.subject.localeCompare(b.subject);
+		})
+	},
+	"Score": function(){
+		d3.selectAll(".chart div").sort(function(a,b){
+			return a.score - b.score;
+		})
+	}
+}
 
 var students = [
 	{name:'ramesh',subject:'maths',score:87},
@@ -52,14 +70,17 @@ var displaySubjects = function() {
 	};
 };
 
-
 var displaySortOptions = function() {
 	var container = d3.select(".sort_options")
 	container.append("div").text("Sort by:").style("color","black").style("background-color","white");
 	for (var i = 0; i < sort_options.length; i++) {
-		container.append("div").text(sort_options[i])
+		container.append("button").text(sort_options[i]).attr("id",function() {return sort_options[i]});
 	};
-	console.log(container)
 };
 
-window.onload = loadChart;
+window.onload = function(){
+	loadChart();	
+	sort_options.forEach(function(each){
+		document.querySelector('#'+each).onclick = sortOptions[each];
+	});
+};
